@@ -1,0 +1,60 @@
+2.2 Architectural Flow
+Step-by-step flow:
+sqlCopy code ┌────────────────────────────────────────────────────────┐
+ │                 1. Data Preparation                    │
+ │  User Articles → Cleaned Sentences → [STYLE_SAMPLE]     │
+ │  GPT Rewrites → Paired with User Style Sentences        │
+ └────────────────────────────────────────────────────────┘
+                │
+                ▼
+ ┌────────────────────────────────────────────────────────┐
+ │             2. Dataset Creation (Few-shot pairs)       │
+ │  Each example:                                         │
+ │  <|system|> You are a writing assistant... <|end|>     │
+ │  <|user|> GPT-style text <|end|>                       │
+ │  <|assistant|> User-style rewrite <|end|>              │
+ └────────────────────────────────────────────────────────┘
+                │
+                ▼
+ ┌────────────────────────────────────────────────────────┐
+ │              3. Fine-tuning (PEFT LoRA)                │
+ │  Model: Phi-3-mini-4k-instruct                         │
+ │  Parameters trained: Low-rank adapter matrices         │
+ │             							    │
+ └────────────────────────────────────────────────────────┘
+                │
+                ▼
+ ┌────────────────────────────────────────────────────────┐
+ │            4. Evaluation Pipeline                      │
+ │  Generate text from a fine-tuned model                 │
+ │  Compute SBERT similarity with style reference         │
+ │  Compare against base model outputs                    │
+ └────────────────────────────────────────────────────────┘
+                │
+                ▼
+ ┌────────────────────────────────────────────────────────┐
+ │            5. Inference Agent                          │
+ │  Accepts any GPT-like text → outputs user-style rewrite│
+ │
+ └────────────────────────────────────────────────────────┘
+________________________________________
+Data Science Report
+3.1 Dataset
+•	Source: User’s own writings (75 text samples)
+•	Preprocessing:
+o	Split into sentences using a period-based tokeniser.
+o	Remove short (<5 words) fragments.
+o	Format as [STYLE_SAMPLE]\n<sentence>.\n\n
+•	Final Dataset:
+o	75 style samples
+o	Paired with ChatGPT-style neutral rewrites → produces (input → output) fine-tuning pairs
+3 Evaluation Methodology
+ Quantitative (Objective)
+1.	SBERT Style Similarity
+o	Model: all-MiniLM-L6-v2
+o	Metric: Average cosine similarity between fine-tuned outputs and real user-style sentences.
+o	Baseline: Base model’s similarity to same style references.
+Model	Mean Cosine Similarity	Δ vs. Base
+Few short prompted gpt 5	0.58	—
+Fine-tuned Phi-3 (LoRA)	0.70	+0.12 ✅
+
