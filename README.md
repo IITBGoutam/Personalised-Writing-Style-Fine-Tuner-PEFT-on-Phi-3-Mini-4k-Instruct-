@@ -1,0 +1,2 @@
+# Personalised-Writing-Style-Fine-Tuner-PEFT-on-Phi-3-Mini-4k-Instruct-
+ The goal of this project is to fine-tune a pre-trained instruction-following model (phi-3-mini-4k-instruct) to reproduce a specific author’s writing style based on a limited set (75 samples) of text segments. This enables personalised AI writing, where the model generates text that reflects the phrasing, rhythm, and tone of the user’s style, 
