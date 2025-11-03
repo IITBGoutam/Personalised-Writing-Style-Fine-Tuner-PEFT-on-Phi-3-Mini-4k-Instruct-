@@ -4,4 +4,10 @@
  I am part of the institutes official media body and while writing articles I could not use chatgpt beacuse of it's artificial language style , even humaniszers are not good as they decrease the quality of output 
  I like my wirting style and would love if chatgpt/other llms could write in this style
  This enables personalised AI writing, where the model generates text that reflects the phrasing, rhythm, and tone of the user’s style,
+
+RESULTS - # 12% points increase in similarity score with my finetuned PEFT model as compared to few shot prompted chat gpt
+
  
+CITATIONS -
+GIMINI USED FOR FEW SHOT PROMPTING MODEL - https://gemini.google.com/share/be39269980d0
+CODE GEN LOGS -https://gemini.google.com/share/00981be75617
