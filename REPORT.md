@@ -1,6 +1,9 @@
-2.2 Architectural Flow
-Step-by-step flow:
-sqlCopy code ┌────────────────────────────────────────────────────────┐
+# Data Science Report
+
+## 2.2 Architectural Flow
+
+```
+ ┌────────────────────────────────────────────────────────┐
  │                 1. Data Preparation                    │
  │  User Articles → Cleaned Sentences → [STYLE_SAMPLE]     │
  │  GPT Rewrites → Paired with User Style Sentences        │
@@ -35,11 +38,11 @@ sqlCopy code ┌─────────────────────�
  ┌────────────────────────────────────────────────────────┐
  │            5. Inference Agent                          │
  │  Accepts any GPT-like text → outputs user-style rewrite│
- │
+ │                                                        │
  └────────────────────────────────────────────────────────┘
-________________________________________
-Data Science Report
-3.1 Dataset
+```
+
+## 3.1 Dataset
 •	Source: User’s own writings (75 text samples)
 •	Preprocessing:
 o	Split into sentences using a period-based tokeniser.
@@ -48,13 +51,18 @@ o	Format as [STYLE_SAMPLE]\n<sentence>.\n\n
 •	Final Dataset:
 o	75 style samples
 o	Paired with ChatGPT-style neutral rewrites → produces (input → output) fine-tuning pairs
-3 Evaluation Methodology
- Quantitative (Objective)
-1.	SBERT Style Similarity
-o	Model: all-MiniLM-L6-v2
-o	Metric: Average cosine similarity between fine-tuned outputs and real user-style sentences.
-o	Baseline: Base model’s similarity to same style references.
-Model	Mean Cosine Similarity	Δ vs. Base
-Few short prompted gpt 5	0.58	—
-Fine-tuned Phi-3 (LoRA)	0.70	+0.12 ✅
+## 3.2 Evaluation Methodology
+
+**Quantitative (objective) — SBERT style similarity**
+
+- Model: `all-MiniLM-L6-v2`
+- Metric: average cosine similarity between generated outputs and real
+  user-style sentences.
+- Baseline: few-shot prompted GPT-5, plus the untuned base model against the
+  same style references.
+
+| Model | Mean cosine similarity | Δ vs. baseline |
+|---|---|---|
+| Few-shot prompted GPT-5 | 0.58 | — |
+| Fine-tuned Phi-3 (LoRA) | 0.70 | +0.12 |
 
