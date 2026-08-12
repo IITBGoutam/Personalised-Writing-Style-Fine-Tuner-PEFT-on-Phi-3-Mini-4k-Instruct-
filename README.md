@@ -78,10 +78,6 @@ it is read from the environment, and prompted for via `getpass` if unset:
 import os
 os.environ["GEMINI_API_KEY"] = "..."   # or let the notebook prompt you
 ```
-
-Never hard-code the key into a notebook cell — including as the prompt string
-passed to `input()`, which gets echoed into saved cell output.
-
 Then run in order: `data_creation/` → `training/` → `testing/`.
 
 ## Built with
